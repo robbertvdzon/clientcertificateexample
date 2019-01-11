@@ -1,4 +1,4 @@
-Maak de keystores en alle certificaten:
+--- Maak de keystores en alle certificaten:
 keytool -genkey -keystore serverkeystore.jks -storetype JKS -alias server -storepass passwd -validity 360 -keysize 2048 -keyalg RSA -dname "CN=localhost, OU=Unknown, O=Unknown, L=Unknown, S=Unknown, C=Unknown"
 keytool -exportcert -alias server -keystore serverkeystore.jks -storepass passwd -keypass passwd -rfc -file server_cert.pem
 keytool -import -keystore clienttruststore.jks -storetype JKS -file server_cert.pem -alias localhost -storepass passwd -noprompt
