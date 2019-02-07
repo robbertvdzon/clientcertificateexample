@@ -13,6 +13,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.net.URL;
 import java.security.KeyStore;
@@ -24,8 +25,27 @@ import java.time.Duration;
 @Configuration
 public class RestTemplateConfiguration {
 
-    @Bean
-    public RestTemplate getRestTemplate(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+    @Bean ("RestTemplateWithCertificateWithBasicAuth")
+    public RestTemplate getRestTemplateWithCertificateAndBasicAuth(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        return getRestTemplate(builder, true, true);
+    }
+
+    @Bean ("RestTemplateWithCertificate")
+    public RestTemplate getRestTemplateWithCertificate(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        return getRestTemplate(builder, true, false);
+    }
+
+    @Bean ("RestTemplateWithoutCertificateWithBasicAuth")
+    public RestTemplate getRestTemplateWithoutCertificateWithBasicAuth(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        return getRestTemplate(builder, false, true);
+    }
+
+    @Bean ("RestTemplateWithoutCertificate")
+    public RestTemplate getRestTemplateWithoutCertificate(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+        return getRestTemplate(builder, false, false);
+    }
+
+    public RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
 
         String keystoreLocation = "clientkeystore.p12";
         String keystorePasswd = "passwd";
@@ -40,11 +60,16 @@ public class RestTemplateConfiguration {
         keystore.load(new ClassPathResource(keystoreLocation).getInputStream(), keystorePasswd.toCharArray());
 
         try {
-            javax.net.ssl.SSLContext sslContext = SSLContextBuilder
-                    .create()
-                    .loadKeyMaterial(keystore, keyPasswd.toCharArray())
-                    .loadTrustMaterial(truststore, new TrustSelfSignedStrategy())
-                    .build();
+
+            SSLContextBuilder sslContextBuilder = SSLContextBuilder.create();
+
+            sslContextBuilder.loadTrustMaterial(truststore, new TrustSelfSignedStrategy());
+
+            if (clientCert) {
+                sslContextBuilder.loadKeyMaterial(keystore, keyPasswd.toCharArray());
+            }
+
+            SSLContext sslContext = sslContextBuilder.build();
 
             HttpClient client = HttpClients.custom()
                     .setSSLContext(sslContext)
@@ -54,9 +79,11 @@ public class RestTemplateConfiguration {
                     .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(client))
                     .setReadTimeout(Duration.ofSeconds(60))
                     .setConnectTimeout(Duration.ofSeconds(60));
-//            if (basicAuthUsername != null && basicAuthPasswd != null) {
-//                restTemplateBuilder = restTemplateBuilder.basicAuthentication(basicAuthUsername, basicAuthPasswd);
-//            }
+
+            if (basicAuth) {
+                restTemplateBuilder.basicAuthentication("basicauth_client", "passwd");
+            }
+
             return restTemplateBuilder.build();
         } catch (Exception e) {
             throw new RuntimeException(e);

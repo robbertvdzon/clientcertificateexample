@@ -1,8 +1,9 @@
-package com.example.server;
+package com.example.server2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,19 +16,42 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(jsr250Enabled=true, securedEnabled=true, prePostEnabled=true)
 @ComponentScan("com.example")
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().permitAll()
-                .and()
+
+
+        http
+//                .authorizeRequests()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+
+//                .authorizeRequests()
+//                .antMatchers("/insecure*")
+//                .permitAll();
+//                .and()
+
+
+
+                .antMatcher("/secure*")
                 .x509()
                 .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
                 .userDetailsService(userDetailsService());
-//        http.authorizeRequests().anyRequest().authenticated()
+
+//                .and()
+//                .antMatcher("/secureBAAuthenticated")
+//                .httpBasic();
+
+//                http.authorizeRequests().anyRequest().authenticated()
 //                .and()
 //                .httpBasic();
+
+
+
     }
 
     @Bean
@@ -35,10 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) {
-                if (username.equals("cid")) {
+                if (username.equals("client")) {
                     return new User(username, "",
                             AuthorityUtils
-                                    .commaSeparatedStringToAuthorityList("ROLE_USER"));
+                                    .commaSeparatedStringToAuthorityList("ROLE_CERTIFICATE_USER"));
                 }
                 return new User(username, "", Collections.emptyList());
             }

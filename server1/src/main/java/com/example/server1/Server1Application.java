@@ -1,4 +1,4 @@
-package com.example.server;
+package com.example.server1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,16 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class ServerApplication {
+public class Server1Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServerApplication.class, args);
-    }
-
-    @GetMapping("/")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
-    public String getRoot(){
-        return "Hello";
+        SpringApplication.run(Server1Application.class, args);
     }
 
 }
