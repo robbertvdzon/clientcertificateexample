@@ -11,7 +11,7 @@ public class MyRestController2 {
      * Needs client certificate (without any authentication)
      */
     @GetMapping("/secure")
-    public String getSecure(){
+    public String getSecure() {
         return "Secure page";
     }
 
@@ -20,14 +20,7 @@ public class MyRestController2 {
      */
     @GetMapping("/secureBAAuthenticated")
     @RolesAllowed("BA_USER")
-//  the following two annotations could also be used!
-//    @PreAuthorize("hasAuthority('ROLE_BA_USER')")
-//    @PreAuthorize("hasRole('BA_USER')")
-    public String getSecureBAAuthenticated(){
-//    public String getSecureBAAuthenticated(Authentication authentication){
-//        System.out.println("BAauth:"+authentication);
-//        System.out.println(authentication.getPrincipal());
-//        System.out.println(authentication.getClass());
+    public String getSecureBAAuthenticated() {
         return "Secure authenticated page";
     }
 
@@ -40,7 +33,7 @@ public class MyRestController2 {
 //  the following two annotations could also be used!
 //    @PreAuthorize("hasAuthority('ROLE_CERTIFICATE_USER')")
 //    @PreAuthorize("hasRole('CERTIFICATE_USER')")
-    public String getSecureCAAuthenticated(){
+    public String getSecureCAAuthenticated() {
         return "Secure authenticated page";
     }
 

@@ -9,14 +9,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled=true, securedEnabled=true, prePostEnabled=true)
+@EnableGlobalMethodSecurity(jsr250Enabled = true, securedEnabled = true, prePostEnabled = true)
 @ComponentScan("com.example")
 public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
 
@@ -25,47 +24,21 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
 
 
         http
-//                .authorizeRequests()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-
-//                .authorizeRequests()
-//                .antMatchers("/insecure*")
-//                .permitAll();
-//                .and()
-
-
-
                 .antMatcher("/secure*")
                 .x509()
                 .subjectPrincipalRegex("CN=(.*?)(?:,|$)")
                 .userDetailsService(userDetailsService());
-
-//                .and()
-//                .antMatcher("/secureBAAuthenticated")
-//                .httpBasic();
-
-//                http.authorizeRequests().anyRequest().authenticated()
-//                .and()
-//                .httpBasic();
-
-
-
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) {
-                if (username.equals("client")) {
-                    return new User(username, "",
-                            AuthorityUtils
-                                    .commaSeparatedStringToAuthorityList("ROLE_CERTIFICATE_USER"));
-                }
-                return new User(username, "", Collections.emptyList());
+        return username -> {
+            if (username.equals("client")) {
+                return new User(username, "",
+                        AuthorityUtils
+                                .commaSeparatedStringToAuthorityList("ROLE_CERTIFICATE_USER"));
             }
+            return new User(username, "", Collections.emptyList());
         };
     }
 }
