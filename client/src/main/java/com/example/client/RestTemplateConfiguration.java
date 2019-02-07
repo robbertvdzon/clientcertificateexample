@@ -81,7 +81,7 @@ public class RestTemplateConfiguration {
                     .setConnectTimeout(Duration.ofSeconds(60));
 
             if (basicAuth) {
-                restTemplateBuilder.basicAuthentication("basicauth_client", "passwd");
+                restTemplateBuilder = restTemplateBuilder.basicAuthentication("basicauth_client", "passwd");
             }
 
             return restTemplateBuilder.build();

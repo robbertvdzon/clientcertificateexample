@@ -23,7 +23,7 @@ import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(jsr250Enabled=true, securedEnabled=true, prePostEnabled=true)
+//@EnableGlobalMethodSecurity(jsr250Enabled=true, securedEnabled=true, prePostEnabled=true)
 @ComponentScan("com.example")
 public class SecurityConfig1 extends WebSecurityConfigurerAdapter {
 
@@ -31,8 +31,8 @@ public class SecurityConfig1 extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("basicauth_client").password("passwd")
-                .roles("BA_USER");
+                .withUser("basicauth_client").password(passwordEncoder().encode("passwd"))
+                .authorities("ROLE_USER");
 //                .withUser("basicauth_client").password("passwd")
 //                .authorities("ROLE_BA_USER");
     }
@@ -44,7 +44,8 @@ public class SecurityConfig1 extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
 
