@@ -11,7 +11,7 @@ public class RestEndpoints {
     }
 
     private void initRestEndpoins(Javalin app){
-        app.get("/insecure", ctx -> ctx.result("Insecured page"), roles(MyRole.NONE));
+        app.get("/insecure", ctx -> ctx.result("Insecured page"));
         app.get("/secure", ctx -> ctx.result("Secured page").header("WWW-Authenticate", "Basic realm=\"User Visible Realm\""), roles(MyRole.ROLE_ONE));
     }
 }

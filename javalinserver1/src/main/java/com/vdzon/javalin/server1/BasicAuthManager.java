@@ -14,7 +14,7 @@ public class BasicAuthManager {
         // Set the access-manager that Javalin should use
         app.accessManager((handler, ctx, permittedRoles) -> {
             MyRole userRole = getUserRole(ctx);
-            if (permittedRoles.contains(userRole)) {
+            if (permittedRoles.isEmpty() || permittedRoles.contains(userRole)) {
                 handler.handle(ctx);
             } else {
                 ctx.header("WWW-Authenticate","Basic realm=\"User Visible Realm\"");
@@ -32,13 +32,6 @@ public class BasicAuthManager {
                 .map(u->u.getRole())
                 .findFirst()
                 .orElseGet(()->MyRole.NONE);
-
-//
-//        if (basicAuthCredentials!=null){
-//            if ("user".equals(basicAuthCredentials.getUsername()) && "passwd".equals(basicAuthCredentials.getPassword())) return MyRole.ROLE_ONE;
-//        }
-//
-//        return MyRole.ANYONE;
     }
 
     private boolean authenticateUser(User u, BasicAuthCredentials basicAuthCredentials) {
