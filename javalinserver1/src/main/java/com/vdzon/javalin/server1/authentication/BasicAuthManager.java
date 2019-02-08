@@ -1,5 +1,8 @@
-package com.vdzon.javalin.server1;
+package com.vdzon.javalin.server1.authentication;
 
+import com.vdzon.javalin.server1.usermanagement.UserManagement;
+import com.vdzon.javalin.server1.domain.MyRole;
+import com.vdzon.javalin.server1.domain.User;
 import io.javalin.BasicAuthCredentials;
 import io.javalin.Context;
 import io.javalin.Javalin;

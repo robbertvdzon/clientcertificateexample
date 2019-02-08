@@ -1,4 +1,6 @@
-package com.vdzon.javalin.server1;
+package com.vdzon.javalin.server1.domain;
+
+import com.vdzon.javalin.server1.domain.MyRole;
 
 public class User {
     private String username;

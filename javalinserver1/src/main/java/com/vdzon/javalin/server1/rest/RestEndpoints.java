@@ -1,5 +1,6 @@
-package com.vdzon.javalin.server1;
+package com.vdzon.javalin.server1.rest;
 
+import com.vdzon.javalin.server1.domain.MyRole;
 import io.javalin.Javalin;
 
 import static io.javalin.security.SecurityUtil.roles;
@@ -12,6 +13,6 @@ public class RestEndpoints {
 
     private void initRestEndpoins(Javalin app){
         app.get("/insecure", ctx -> ctx.result("Insecured page"));
-        app.get("/secure", ctx -> ctx.result("Secured page").header("WWW-Authenticate", "Basic realm=\"User Visible Realm\""), roles(MyRole.ROLE_ONE));
+        app.get("/secure", ctx -> ctx.result("Secured page"), roles(MyRole.ROLE_ONE));
     }
 }
