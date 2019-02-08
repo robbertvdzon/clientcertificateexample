@@ -1,6 +1,6 @@
 package com.vdzon.javalin.server1.usermanagement;
 
-import com.vdzon.javalin.server1.domain.MyRole;
+import com.vdzon.javalin.server1.domain.UserRole;
 import com.vdzon.javalin.server1.domain.User;
 
 import java.util.Arrays;
@@ -19,9 +19,9 @@ public class UserManagement {
 
     private List<User> populateUsers() {
         return Arrays.asList(
-                new User("user","passwd", MyRole.ROLE_ONE),
-                new User("user2","passwd", MyRole.ROLE_TWO),
-                new User("user3","passwd", MyRole.ROLE_THREE)
+                new User("user","passwd", UserRole.ROLE_ONE),
+                new User("user2","passwd", UserRole.ROLE_TWO),
+                new User("user3","passwd", UserRole.ROLE_THREE)
         );
     }
 }

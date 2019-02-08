@@ -1,13 +1,11 @@
 package com.vdzon.javalin.server1.domain;
 
-import com.vdzon.javalin.server1.domain.MyRole;
-
 public class User {
     private String username;
     private String password;
-    private MyRole role;
+    private UserRole role;
 
-    public User(String username, String password, MyRole role) {
+    public User(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -21,11 +19,11 @@ public class User {
         return password;
     }
 
-    public MyRole getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(MyRole role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 }
