@@ -21,7 +21,8 @@ public class UserManagement {
         return Arrays.asList(
                 new User("user","passwd", UserRole.ROLE_ONE),
                 new User("user2","passwd", UserRole.ROLE_TWO),
-                new User("user3","passwd", UserRole.ROLE_THREE)
+                new User("user3","passwd", UserRole.ROLE_THREE),
+                new User("basicauth_client", "passwd", UserRole.ROLE_ONE)
         );
     }
 }

@@ -39,7 +39,7 @@ public class BasicAuthManager {
 
     private boolean authenticateUser(User u, BasicAuthCredentials basicAuthCredentials) {
         if (basicAuthCredentials==null) return false;
-        return ("user".equals(basicAuthCredentials.getUsername()) && "passwd".equals(basicAuthCredentials.getPassword()));
+        return (u.getUsername().equals(basicAuthCredentials.getUsername()) && u.getPassword().equals(basicAuthCredentials.getPassword()));
 
     }
 
