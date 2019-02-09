@@ -1,4 +1,4 @@
-package com.demo;
+package com.demobasicauth;
 
 import io.javalin.Javalin;
 
