@@ -25,6 +25,13 @@ public class SslManager {
         sslContextFactory.setKeyStorePath(Application.class.getResource("/serverkeystore.p12").toExternalForm());
         sslContextFactory.setKeyStoreType("PKCS12");
         sslContextFactory.setKeyStorePassword("passwd");
+
+        sslContextFactory.setTrustStorePath(Application.class.getResource("/servertruststore.p12").toExternalForm());
+        sslContextFactory.setTrustStoreType("PKCS12");
+        sslContextFactory.setTrustStorePassword("passwd");
+        sslContextFactory.setWantClientAuth(true);
+        sslContextFactory.setEndpointIdentificationAlgorithm("HTTPS");
+
         return sslContextFactory;
     }
 }
