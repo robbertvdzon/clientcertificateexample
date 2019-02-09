@@ -13,7 +13,11 @@
         <module>server1</module>
         <module>server2</module>
         <module>javalinserver1</module>
-        <module>demo1_javalin_only_rest</module>
+        <module>javalin_json_logging</module>
+        <module>javalin_basic_auth</module>
+        <module>javalin_https</module>
+        <module>javalin_https_with_client_cert</module>
+        <module>javalin_base</module>
     </modules>
 
 </project>
