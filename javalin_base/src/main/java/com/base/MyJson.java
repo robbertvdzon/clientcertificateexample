@@ -1,4 +1,4 @@
-package com.demobasicauth;
+package com.base;
 
 public class MyJson {
     private String text = "";
