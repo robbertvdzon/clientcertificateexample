@@ -9,6 +9,19 @@ import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 public class SslManager {
     public SslManager(Javalin app){
+
+//        javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+//                new javax.net.ssl.HostnameVerifier(){
+//
+//                    public boolean verify(String hostname,
+//                                          javax.net.ssl.SSLSession sslSession) {
+//                        if (hostname.equals("localhost")) {
+//                            return true;
+//                        }
+//                        return false;
+//                    }
+//                });
+
         app.server(() -> {
             org.eclipse.jetty.server.Server server = new Server();
             ServerConnector sslConnector = new ServerConnector(server, getSslContextFactory());
@@ -18,6 +31,8 @@ public class SslManager {
             server.setConnectors(new Connector[]{sslConnector, connector});
             return server;
         });
+
+
     }
 
     private SslContextFactory getSslContextFactory() {
@@ -26,11 +41,13 @@ public class SslManager {
         sslContextFactory.setKeyStoreType("PKCS12");
         sslContextFactory.setKeyStorePassword("passwd");
 
+        // the following is needed for requiring a client certificate
         sslContextFactory.setTrustStorePath(Application.class.getResource("/servertruststore.p12").toExternalForm());
         sslContextFactory.setTrustStoreType("PKCS12");
         sslContextFactory.setTrustStorePassword("passwd");
-        sslContextFactory.setWantClientAuth(true);
+        sslContextFactory.setNeedClientAuth(true);
         sslContextFactory.setEndpointIdentificationAlgorithm("HTTPS");
+
 
         return sslContextFactory;
     }
