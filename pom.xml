@@ -13,6 +13,7 @@
         <module>server1</module>
         <module>server2</module>
         <module>javalinserver1</module>
+        <module>demo1_javalin_only_rest</module>
     </modules>
 
 </project>
