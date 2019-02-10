@@ -10,8 +10,11 @@ public class DependencyInjectionApplication {
     }
 
     public void start(){
-        app = Javalin.create();
-        new RestEndpoints().initRestEndpoints(app);
+        MyModuleComponent myModuleComponent = DaggerMyModuleComponent.create();
+        app = myModuleComponent.buildJavalin();
+        RestEndpoints restEndpoints = myModuleComponent.buildRestEndpoints();
+        restEndpoints.init();
+
         app.start(8080);
     }
 
