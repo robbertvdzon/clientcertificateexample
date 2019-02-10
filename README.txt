@@ -11,10 +11,10 @@ Gedaan:
 - Json logging
 - Bean validation
 - Static files
+- Dependency Injection
 
 Makkelijk te doen:
 - Http Client library using circuit breaker, rety and fallback:
-- Dependency Injection
 - Configuration using yml files
 
 Lastiger:
