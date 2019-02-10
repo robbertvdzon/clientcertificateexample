@@ -20,6 +20,7 @@
         <module>javalin_base</module>
         <module>javalin_bean_validation</module>
         <module>javalin_static_files</module>
+        <module>javalin_dependency_injection</module>
     </modules>
 
 </project>
