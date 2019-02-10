@@ -3,6 +3,13 @@ Hulp scripts:
 - Run client test voor oude spring services: clienttest.bat
 
 Todo:
+
+Gedaan:
+- Base
+- Basic Authentication
+- Https
+- Json logging
+
 Makkelijk te doen:
 - Bean validation
 - Static files
@@ -13,12 +20,13 @@ Makkelijk te doen:
 Lastiger:
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Database access
+- Thymeleaf mvc
 
 Lastig:
 - Keycloak
 - Oauth
 - Distributed tracing (op basis van json logging module)
-- FIX: client certificate module
+- client certificate module (deze is half gedaan)
 
 In alle modules:
 - een goede IT test
