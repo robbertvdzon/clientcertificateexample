@@ -7,9 +7,9 @@ import io.javalin.Javalin;
 import javax.inject.Singleton;
 
 @Singleton
-@Component(modules = MyModule.class)
-public interface MyModuleComponent {
-    Javalin buildJavalin();
+@Component(modules = ProjectModule.class)
+public interface ProjectModuleComponent {
+    Javalin getJavalin();
 
-    RestEndpoints buildRestEndpoints();
+    RestEndpoints getRestEndpoints();
 }

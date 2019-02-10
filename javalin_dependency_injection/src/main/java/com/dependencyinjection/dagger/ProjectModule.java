@@ -8,7 +8,7 @@ import io.javalin.Javalin;
 import javax.inject.Singleton;
 
 @Module
-public class MyModule {
+public class ProjectModule {
 
     @Provides
     @Singleton

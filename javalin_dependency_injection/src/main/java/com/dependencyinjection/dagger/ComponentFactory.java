@@ -2,13 +2,13 @@ package com.dependencyinjection.dagger;
 
 public class ComponentFactory {
 
-    private MyModuleComponent myModuleComponent;
+    private ProjectModuleComponent myModuleComponent;
 
     public ComponentFactory() {
-        myModuleComponent = DaggerMyModuleComponent.create();
+        myModuleComponent = DaggerProjectModuleComponent.create();
     }
 
-    public MyModuleComponent factory() {
+    public ProjectModuleComponent module() {
         return myModuleComponent;
     }
 }
