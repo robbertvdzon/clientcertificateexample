@@ -1,5 +1,6 @@
 package com.dependencyinjection.dagger;
 
+import com.dependencyinjection.HelloWorldService;
 import com.dependencyinjection.RestEndpoints;
 import dagger.Module;
 import dagger.Provides;
@@ -12,14 +13,20 @@ public class ProjectModule {
 
     @Provides
     @Singleton
-    public static Javalin getJavalin() {
+    static Javalin getJavalin() {
         return Javalin.create();
     }
 
     @Provides
     @Singleton
-    public static RestEndpoints getRestEndpoints(Javalin app) {
-        return new RestEndpoints(app);
+    static HelloWorldService getHelloWorldService() {
+        return new HelloWorldService();
+    }
+
+    @Provides
+    @Singleton
+    static RestEndpoints getRestEndpoints(Javalin app, HelloWorldService helloWorldService) {
+        return new RestEndpoints(app, helloWorldService);
     }
 
 }
