@@ -1,5 +1,6 @@
-package com.dependencyinjection;
+package com.dependencyinjection.dagger;
 
+import com.dependencyinjection.RestEndpoints;
 import dagger.Module;
 import dagger.Provides;
 import io.javalin.Javalin;
