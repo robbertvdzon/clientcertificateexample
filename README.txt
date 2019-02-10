@@ -10,9 +10,9 @@ Gedaan:
 - Https
 - Json logging
 - Bean validation
+- Static files
 
 Makkelijk te doen:
-- Static files
 - Http Client library using circuit breaker, rety and fallback:
 - Dependency Injection
 - Configuration using yml files
