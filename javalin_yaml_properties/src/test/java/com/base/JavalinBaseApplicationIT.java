@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -14,7 +16,7 @@ class JavalinBaseApplicationIT {
     private PropertiesApplication application;
 
     @BeforeEach
-    void before() {
+    void before() throws IOException {
         application = new PropertiesApplication();
         application.start();
     }
@@ -61,13 +63,15 @@ class JavalinBaseApplicationIT {
     }
 
     @Test
-    @DisplayName("Test get property")
+    @DisplayName("Test get properties")
     void testGetProperty() {
         when()
-                .get("/property")
+                .get("/properties")
                 .then()
                 .statusCode(200)
-                .body(equalTo("test-property"));
+                .contentType("application/json")
+                .body("myprop1", equalTo("testvalue1"))
+                .body("myprop2", equalTo("testvalue2"));
 
     }
 
