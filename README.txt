@@ -9,9 +9,9 @@ Gedaan:
 - Basic Authentication
 - Https
 - Json logging
+- Bean validation
 
 Makkelijk te doen:
-- Bean validation
 - Static files
 - Http Client library using circuit breaker, rety and fallback:
 - Dependency Injection

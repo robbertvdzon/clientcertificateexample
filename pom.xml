@@ -18,6 +18,7 @@
         <module>javalin_https</module>
         <module>javalin_https_with_client_cert</module>
         <module>javalin_base</module>
+        <module>javalin_bean_validation</module>
     </modules>
 
 </project>
