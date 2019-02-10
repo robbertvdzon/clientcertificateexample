@@ -1,5 +1,6 @@
 package com.properties;
 
+import com.properties.props.ApplicationProperties;
 import io.javalin.Javalin;
 
 public class RestEndpoints {

@@ -12,10 +12,10 @@ Gedaan:
 - Bean validation
 - Static files
 - Dependency Injection
+- Configuration using yml files
 
 Makkelijk te doen:
-- Http Client library using circuit breaker, rety and fallback:
-- Configuration using yml files
+- Http Client library using circuit breaker, retry and fallback:
 
 Lastiger:
 - Consumer driver contract example (gewoon met spring cloud contract?)

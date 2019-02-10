@@ -1,30 +1,26 @@
 package com.properties;
 
+import com.properties.props.ApplicationProperties;
+import com.properties.props.PropertyManager;
 import io.javalin.Javalin;
-import org.yaml.snakeyaml.Yaml;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
 public class PropertiesApplication {
     Javalin app;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         new PropertiesApplication().start();
     }
 
-    public void start() throws IOException {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = PropertiesApplication.class.getResource("/application.yml").openStream();
-        ApplicationProperties properties = yaml.load(inputStream);
+    public void start() {
+        ApplicationProperties properties = new PropertyManager().loadProperies();
+        System.out.println("Properties loaded:"+properties);
 
         app = Javalin.create();
         new RestEndpoints().initRestEndpoints(app, properties);
         app.start(8080);
     }
 
-    public void stop(){
+    public void stop() {
         app.stop();
     }
 }

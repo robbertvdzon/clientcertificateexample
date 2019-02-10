@@ -1,4 +1,4 @@
-package com.properties;
+package com.properties.props;
 
 public class ApplicationProperties {
     private String myprop1;
@@ -18,5 +18,13 @@ public class ApplicationProperties {
 
     public void setMyprop2(String myprop2) {
         this.myprop2 = myprop2;
+    }
+
+    @Override
+    public String toString() {
+        return "ApplicationProperties{" +
+                "myprop1='" + myprop1 + '\'' +
+                ", myprop2='" + myprop2 + '\'' +
+                '}';
     }
 }

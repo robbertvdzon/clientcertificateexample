@@ -6,8 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -16,7 +14,7 @@ class JavalinBaseApplicationIT {
     private PropertiesApplication application;
 
     @BeforeEach
-    void before() throws IOException {
+    void before() {
         application = new PropertiesApplication();
         application.start();
     }
@@ -74,7 +72,6 @@ class JavalinBaseApplicationIT {
                 .body("myprop2", equalTo("testvalue2"));
 
     }
-
 
 
 }
