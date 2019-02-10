@@ -13,6 +13,7 @@ Gedaan:
 - Static files
 - Dependency Injection
 - Configuration using yml files
+- Runnable jar
 
 Makkelijk te doen:
 - Http Client library using circuit breaker, retry and fallback:
