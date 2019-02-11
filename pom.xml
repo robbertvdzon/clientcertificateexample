@@ -24,6 +24,7 @@
         <module>javalin_yaml_properties</module>
         <module>javalin_runnable_jar</module>
         <module>javalin_http_client</module>
+        <module>javalin_prometheus</module>
     </modules>
 
 </project>
