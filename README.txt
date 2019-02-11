@@ -15,10 +15,10 @@ Gedaan:
 - Configuration using yml files
 - Runnable jar
 - Http Client library using circuit breaker, retry and fallback:
+- prometheus
 
 Lastiger:
 - actuator
-- prometheus
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Database access
 - Thymeleaf mvc
