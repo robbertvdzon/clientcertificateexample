@@ -16,10 +16,10 @@ Gedaan:
 - Runnable jar
 - Http Client library using circuit breaker, retry and fallback:
 - Prometheus endpoint
+- Consumer driver contract example (gewoon met spring cloud contract?)
 
 Lastiger:
 - actuator
-- Consumer driver contract example (gewoon met spring cloud contract?)
 - Database access
 - Thymeleaf mvc
 
