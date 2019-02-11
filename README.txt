@@ -15,7 +15,7 @@ Gedaan:
 - Configuration using yml files
 - Runnable jar
 - Http Client library using circuit breaker, retry and fallback:
-- prometheus
+- Prometheus endpoint
 
 Lastiger:
 - actuator
