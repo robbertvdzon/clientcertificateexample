@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.IntStream;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -63,11 +65,16 @@ class JavalinBaseApplicationIT {
     @Test
     @DisplayName("Test basic get from external system")
     void testExternal() {
-        when()
-                .get("/external")
-                .then()
-                .statusCode(200)
-                .body(equalTo("from external"));
+
+
+        // initial, the call is succesfull
+        when().get("/external").then().statusCode(200).body(equalTo("from slow server"));
+
+        when().get("/enabledelay");
+
+        IntStream.of(15).forEach(i->{
+            when().get("/external").then().statusCode(200).body(equalTo("from fallback"));
+        });
 
     }
 

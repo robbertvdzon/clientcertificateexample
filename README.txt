@@ -17,8 +17,11 @@ Gedaan:
 
 Makkelijk te doen:
 - Http Client library using circuit breaker, retry and fallback:
+-
 
 Lastiger:
+- actuator
+- prometheus
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Database access
 - Thymeleaf mvc

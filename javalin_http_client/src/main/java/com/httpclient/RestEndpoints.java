@@ -22,54 +22,78 @@ public class RestEndpoints {
         app.get("/json", ctx -> ctx.json(new MyJson("Hello World")));
         app.post("/json", ctx -> ctx.result("Got post of " + ctx.bodyAsClass(MyJson.class).getText()));
         app.get("/external", ctx -> ctx.result(getFromExternalWithRetryAndCircuitBreaker()));
+        app.get("/delayedresponse", ctx -> ctx.result(getDelayedResult()));
+        app.get("/disabledelay", ctx -> ctx.result(setDelay(0)));
+        app.get("/enabledelay", ctx -> ctx.result(setDelay(1000)));
+    }
+
+    private int delay = 0;
+
+    private String setDelay(int i) {
+        delay = i;
+        return "ok";
+    }
+
+    private String getDelayedResult() {
+        System.out.println("----> get delayed");
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "from slow server";
     }
 
     private void buildPolicies() {
         retryPolicy = new RetryPolicy<>()
-                .handle(RuntimeException.class)
-                .withDelay(Duration.ofSeconds(1))
+                .handle(IOException.class)
+//                .withDelay(Duration.ofSeconds(1))
                 .withMaxRetries(3);
 
         circuitBreakerPolicy = new CircuitBreaker<>()
-                .handleIf((Object exchange, Throwable ex) -> {
+                .handle(IOException.class)
+//                .handleIf((Object exchange, Throwable ex) -> {
 //                    boolean badRequest = exchange != null && StatusCodes.BAD_REQUEST == exchange.getStatusCode();
 //                    return badRequest || ex != null;
-                    return false;
-                })
+//                    return false;
+//                })
                 // If 7 out of 10 requests fail Open the circuit
                 .withFailureThreshold(7, 10)
                 // When half open if 3 out of 5 requests succeed close the circuit
                 .withSuccessThreshold(3, 5)
                 // Delay this long before half opening the circuit
-                .withDelay(Duration.ofSeconds(2))
-                .onClose(() -> System.out.println("Circuit Closed"))
-                .onOpen(() -> System.out.println("Circuit Opened"))
-                .onHalfOpen(() -> System.out.println("Circuit Half-Open"));
+                .withDelay(Duration.ofSeconds(1))
+                .onClose(() ->
+                        System.out.println("XXXCircuit Closed"))
+                .onOpen(() ->
+                        System.out.println("XXXCircuit Opened"))
+                .onHalfOpen(() ->
+                        System.out.println("XXXCircuit Half-Open"));
 
         fallbackPolicy = Fallback.of(this::getFromExternalFallback);
     }
 
     private String getFromExternalWithRetryAndCircuitBreaker() {
         return Failsafe.with(fallbackPolicy, retryPolicy, circuitBreakerPolicy).get(this::getFromExternal);
+//        return Failsafe.with(fallbackPolicy, circuitBreakerPolicy).get(this::getFromExternal);
     }
 
-    private String getFromExternal() {
-        try {
-            System.out.println("----> get from ex");
-            return Request
-                    .Get("http://localhost:8080/")
-                    .execute()
-                    .returnContent()
-                    .asString();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+    private String getFromExternal() throws IOException {
+//        if (true) throw new SocketTimeoutException();
+        System.out.println("----> get from ex");
+        return Request
+                .Get("http://localhost:8080/delayedresponse")
+                .connectTimeout(10)
+                .socketTimeout(10)
+                .execute()
+                .returnContent()
+                .asString();
     }
 
+private int c = 0;
 
     private String getFromExternalFallback() {
-        System.out.println("----> get from fallback");
+        System.out.println("----> get from fallback:"+c++);
         return "from fallback";
     }
 
