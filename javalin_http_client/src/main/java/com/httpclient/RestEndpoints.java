@@ -1,5 +1,6 @@
 package com.httpclient;
 
+import com.httpclient.resilience.FailSafeBuilder;
 import io.javalin.Javalin;
 import net.jodah.failsafe.CircuitBreaker;
 import net.jodah.failsafe.Failsafe;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.time.Duration;
 
 public class RestEndpoints {
     Logger log = LoggerFactory.getLogger(RestEndpoints.class);
@@ -24,53 +24,24 @@ public class RestEndpoints {
 
 
     public void initRestEndpoints(Javalin app) {
-        buildPolicies();
+        retryPolicy = FailSafeBuilder.getRetryPolicy();
+        circuitBreakerPolicy = FailSafeBuilder.getCircuitBreaker();
+        fallbackPolicy = FailSafeBuilder.getFallback(this::getFallbackResult);
+
         app.get("/", ctx -> ctx.result("Hello World from javalin"));
         app.get("/json", ctx -> ctx.json(new MyJson("Hello World")));
         app.post("/json", ctx -> ctx.result("Got post of " + ctx.bodyAsClass(MyJson.class).getText()));
         app.get("/external", ctx -> ctx.result(getFromExternalWithRetryAndCircuitBreaker()));
-        app.get("/delayedresponse", ctx -> ctx.result(getExternal()));
+        app.get("/delayedresponse", ctx -> ctx.result(getDelayedResponse()));
         app.get("/disabledelay", ctx -> ctx.result(setDelay(0)));
         app.get("/enabledelay", ctx -> ctx.result(setDelay(1000)));
     }
 
-    private String setDelay(int i) {
-        delay = i;
-        log.info("----> set delay to "+i);
-        return "ok";
-    }
-
-    private String getExternal() {
-        sleep(delay);
-        return "from external server";
-    }
-
-    private void buildPolicies() {
-        retryPolicy = new RetryPolicy<>()
-                .handle(IOException.class)
-                .withDelay(Duration.ofMillis(1)) // only this small for demo purposes!
-                .withMaxRetries(2)
-                .onRetry((ctx)->log.info("  ----->Retry"))
-                .onRetriesExceeded((ctx)->log.info("  ----->Retries exceeded, use fallback"));
-
-
-        circuitBreakerPolicy = new CircuitBreaker<>()
-                .handle(IOException.class)
-                .withFailureThreshold(10, 12)
-                .withSuccessThreshold(3, 5)
-                .withDelay(Duration.ofSeconds(1)) // only this small for demo purposes!
-                .onClose(() -> log.info("=======> Circuit Closed"))
-                .onOpen(() -> log.warn("=======> Circuit Opened, use fallback for all the call's in the next second"))
-                .onHalfOpen(() -> log.info("\"=======> Circuit Half-Open, try the endpoint again"));
-
-        fallbackPolicy = Fallback.of(this::getFromExternalFallback);
-    }
-
     private String getFromExternalWithRetryAndCircuitBreaker() {
-        return Failsafe.with(fallbackPolicy, retryPolicy, circuitBreakerPolicy).get(this::getFromExternal);
+        return Failsafe.with(fallbackPolicy, retryPolicy, circuitBreakerPolicy).get(this::callExternalSystem);
     }
 
-    private String getFromExternal() throws IOException {
+    private String callExternalSystem() throws IOException {
         log.info("----> try to call external system");
         String result = Request
                 .Get("http://localhost:8080/delayedresponse")
@@ -83,7 +54,18 @@ public class RestEndpoints {
         return result;
     }
 
-    private String getFromExternalFallback() {
+    private String setDelay(int i) {
+        delay = i;
+        log.info("----> set delay to "+i);
+        return "ok";
+    }
+
+    private String getDelayedResponse() {
+        sleep(delay);
+        return "from external server";
+    }
+
+    private String getFallbackResult() {
         log.info("----> return from fallback");
         return "from fallback";
     }

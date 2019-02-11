@@ -26,45 +26,10 @@ class JavalinBaseApplicationIT {
         application.stop();
     }
 
-    @Test
-    @DisplayName("Test basic get")
-    void testHelloWorld() {
-        when()
-                .get("/")
-                .then()
-                .statusCode(200)
-                .body(equalTo("Hello World from javalin"));
-
-    }
 
     @Test
-    @DisplayName("Test get json value")
-    void testGetJson() {
-        when()
-                .get("/json")
-                .then()
-                .statusCode(200)
-                .contentType("application/json")
-                .body("text", equalTo("Hello World"));
-    }
-
-    @Test
-    @DisplayName("Test post json value")
-    void testPostJson() {
-        given()
-                .body("{\"text\": \"Hello from test\"\n}")
-                .contentType("application/json")
-                .when()
-                .post("/json")
-                .then()
-                .statusCode(200)
-                .contentType("text/plain")
-                .body(equalTo("Got post of Hello from test"));
-    }
-
-    @Test
-    @DisplayName("Test basic get from external system")
-    void testExternal() throws InterruptedException {
+    @DisplayName("Test circuitbreaker, retry and fallback ")
+    void testCircuitBreakerRetryAndFallback() throws InterruptedException {
 
         // warm up the system by calling a dummy page
         when().get("/");
