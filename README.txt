@@ -19,11 +19,11 @@ Gedaan:
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Thymeleaf mvc
 - Exceptions afhandelen
-- actuator (health check)
+- Actuator (health check)
+- Schedular
 
 Lastiger:
 - Database access
-- @Schedule
 
 Lastig:
 - Keycloak
