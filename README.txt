@@ -17,11 +17,13 @@ Gedaan:
 - Http Client library using circuit breaker, retry and fallback:
 - Prometheus endpoint
 - Consumer driver contract example (gewoon met spring cloud contract?)
+- Thymeleaf mvc
 
 Lastiger:
 - actuator
 - Database access
-- Thymeleaf mvc
+- @Schedule
+- Excepties afhandelen (?)
 
 Lastig:
 - Keycloak
