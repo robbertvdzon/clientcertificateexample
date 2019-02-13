@@ -18,12 +18,12 @@ Gedaan:
 - Prometheus endpoint
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Thymeleaf mvc
+- Excepties afhandelen
 
 Lastiger:
 - actuator
 - Database access
 - @Schedule
-- Excepties afhandelen (?)
 
 Lastig:
 - Keycloak
