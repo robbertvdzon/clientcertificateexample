@@ -21,8 +21,6 @@ Gedaan:
 - Exceptions afhandelen
 - Actuator (health check)
 - Schedular
-
-Lastiger:
 - Database access
 
 Lastig:
@@ -30,8 +28,6 @@ Lastig:
 - Oauth
 - Distributed tracing (op basis van json logging module)
 - client certificate module (deze is half gedaan)
-
-Niet doen:
 
 
 In alle modules:
