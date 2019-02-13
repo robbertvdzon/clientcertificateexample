@@ -18,10 +18,10 @@ Gedaan:
 - Prometheus endpoint
 - Consumer driver contract example (gewoon met spring cloud contract?)
 - Thymeleaf mvc
-- Excepties afhandelen
+- Exceptions afhandelen
+- actuator (health check)
 
 Lastiger:
-- actuator
 - Database access
 - @Schedule
 
@@ -30,6 +30,9 @@ Lastig:
 - Oauth
 - Distributed tracing (op basis van json logging module)
 - client certificate module (deze is half gedaan)
+
+Niet doen:
+
 
 In alle modules:
 - een goede IT test

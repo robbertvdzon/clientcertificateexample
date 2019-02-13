@@ -28,6 +28,7 @@
         <module>javalin_spring_cloud_contract</module>
         <module>javalin_thymeleaf</module>
         <module>javalin_exception_handling</module>
+        <module>javalin_health_check</module>
     </modules>
 
 </project>
