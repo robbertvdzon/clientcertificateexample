@@ -16,7 +16,7 @@ rem maak een certificate request uit de client keystore(de client1.csr en client
 keytool -certreq -keystore client1keystore.p12 -alias client -keyalg rsa -file client1.csr -storepass passwd
 keytool -certreq -keystore client2keystore.p12 -alias client -keyalg rsa -file client2.csr -storepass passwd
 
-rem genereer een certificaat op basis van de certificate request (client_cert1.pem en client_cert2.pem)
+rem onderteken de csr bestanden (hier komen de volgende files uit: client_cert1.pem en client_cert2.pem)
 keytool -gencert -keystore serverkeystore.p12 -alias server  -storepass passwd -infile client1.csr -outfile client1_cert.pem -rfc
 keytool -gencert -keystore serverkeystore.p12 -alias server  -storepass passwd -infile client2.csr -outfile client2_cert.pem -rfc
 
