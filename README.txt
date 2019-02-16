@@ -1,37 +1,7 @@
-Hulp scripts:
-- Create all certificates using : create_certificates.bat
-- Run client test voor oude spring services: clienttest.bat
+Run create_certificates om alle certificaten te genereren.
 
-Todo:
+Run server1 (zonder https, maar met basic authentication)
+en
+server2 (https, met required client certificate)
 
-Gedaan:
-- Base
-- Basic Authentication
-- Https
-- Json logging
-- Bean validation
-- Static files
-- Dependency Injection
-- Configuration using yml files
-- Runnable jar
-- Http Client library using circuit breaker, retry and fallback:
-- Prometheus endpoint
-- Consumer driver contract example (gewoon met spring cloud contract?)
-- Thymeleaf mvc
-- Exceptions afhandelen
-- Actuator (health check)
-- Schedular
-- Database access
-
-Lastig:
-- Keycloak
-- Oauth
-- Distributed tracing (op basis van json logging module)
-- client certificate module (deze is half gedaan)
-
-
-In alle modules:
-- een goede IT test
-- list all dependencies
-- Ook spring module die hetzelfde doet
-- readme.md met uitleg hoe het werkt
+Als die draaien, kun je de client draaien. Die roept alle endpoints aan van beide servers, met en zonder Basic Authentication en met en zonder een client certificate.
