@@ -12,25 +12,6 @@
         <module>client</module>
         <module>server1</module>
         <module>server2</module>
-        <module>javalinserver1</module>
-        <module>javalin_json_logging</module>
-        <module>javalin_basic_auth</module>
-        <module>javalin_https</module>
-        <module>javalin_https_with_client_cert</module>
-        <module>javalin_base</module>
-        <module>javalin_bean_validation</module>
-        <module>javalin_static_files</module>
-        <module>javalin_dependency_injection</module>
-        <module>javalin_yaml_properties</module>
-        <module>javalin_runnable_jar</module>
-        <module>javalin_http_client</module>
-        <module>javalin_prometheus</module>
-        <module>javalin_spring_cloud_contract</module>
-        <module>javalin_thymeleaf</module>
-        <module>javalin_exception_handling</module>
-        <module>javalin_health_check</module>
-        <module>javalin_schedule</module>
-        <module>javalin_sql</module>
     </modules>
 
 </project>

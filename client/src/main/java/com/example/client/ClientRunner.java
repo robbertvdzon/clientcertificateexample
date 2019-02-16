@@ -65,8 +65,6 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldFail("https://localhost:8443/secure", restTemplate);
         pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
         pageShouldFail("https://localhost:8443/secureCAAuthenticated", restTemplate);
-        pageShouldFail("https://localhost/secure", restTemplate);
-        pageShouldFail("https://localhost/insecure", restTemplate);
 
         System.out.println("\n========================== TESTS WITHOUT CERTIFICATE WITH BASIC AUTH=========================");
         restTemplate = restTemplateWithoutCertificateWithBasicAuth;
@@ -75,8 +73,6 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldFail("https://localhost:8443/secure", restTemplate);
         pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
         pageShouldFail("https://localhost:8443/secureCAAuthenticated", restTemplate);
-        pageShouldFail("https://localhost/secure", restTemplate);
-        pageShouldFail("https://localhost/insecure", restTemplate);
 
         System.out.println("\n========================== TESTS WITH CERTIFICATE WITHOUT BASIC AUTH =========================");
         restTemplate = restTemplateWithCertificate;
@@ -85,8 +81,6 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldSucceed("https://localhost:8443/secure", restTemplate);
         pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
         pageShouldSucceed("https://localhost:8443/secureCAAuthenticated", restTemplate);
-        pageShouldSucceed("https://localhost/secure", restTemplate);
-        pageShouldFail("https://localhost/insecure", restTemplate);
 
         System.out.println("\n========================== TESTS WITH CERTIFICATE WITH BASIC AUTH =========================");
         restTemplate = restTemplateWithCertificateWithBasicAuth;
@@ -95,8 +89,6 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldSucceed("https://localhost:8443/secure", restTemplate);
         pageShouldSucceed("https://localhost:8443/secureBAAuthenticated", restTemplate);
         pageShouldSucceed("https://localhost:8443/secureCAAuthenticated", restTemplate);
-        pageShouldSucceed("https://localhost/secure", restTemplate);
-        pageShouldSucceed("https://localhost/insecure", restTemplate);
 
         System.out.println(failureCount==0?"\n\nAll tests passed!":"\n\n"+failureCount+" Tests failed!! <--------");
 
