@@ -33,7 +33,7 @@ public class SecurityConfig2 extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            if (username.equals("client")) {
+            if (username.equals("client2")) {
                 return new User(username, "",
                         AuthorityUtils
                                 .commaSeparatedStringToAuthorityList("ROLE_CERTIFICATE_USER"));

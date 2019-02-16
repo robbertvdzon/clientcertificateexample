@@ -25,32 +25,32 @@ import java.time.Duration;
 @Configuration
 public class RestTemplateConfiguration {
 
-    @Bean ("RestTemplateWithCertificateWithBasicAuth")
+    @Bean ("RestTemplateWithCertificateClient1")
     public RestTemplate getRestTemplateWithCertificateAndBasicAuth(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
-        return getRestTemplate(builder, true, true);
+        return getRestTemplate(builder, true, "client1", false);
     }
 
-    @Bean ("RestTemplateWithCertificate")
+    @Bean ("RestTemplateWithCertificateClient2")
     public RestTemplate getRestTemplateWithCertificate(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
-        return getRestTemplate(builder, true, false);
+        return getRestTemplate(builder, true, "client2", false);
     }
 
     @Bean ("RestTemplateWithoutCertificateWithBasicAuth")
     public RestTemplate getRestTemplateWithoutCertificateWithBasicAuth(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
-        return getRestTemplate(builder, false, true);
+        return getRestTemplate(builder, false, "", true);
     }
 
     @Bean ("RestTemplateWithoutCertificate")
     public RestTemplate getRestTemplateWithoutCertificate(RestTemplateBuilder builder) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
-        return getRestTemplate(builder, false, false);
+        return getRestTemplate(builder, false, "", false);
     }
 
-    public RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
+    public RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, String keystoreprefix, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
 
-        String keystoreLocation = "clientkeystore.p12";
+        String keystoreLocation = keystoreprefix+"keystore.p12";
         String keystorePasswd = "passwd";
         String keyPasswd = "passwd";
-        String truststoreLocation = "clienttruststore.p12";
+        String truststoreLocation = keystoreprefix+"truststore.p12";
         String trustPasswd = "passwd";
 
         KeyStore truststore = KeyStore.getInstance("PKCS12");

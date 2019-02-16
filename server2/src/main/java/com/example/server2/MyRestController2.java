@@ -16,16 +16,6 @@ public class MyRestController2 {
     }
 
     /*
-     * Needs client certificate, and Basic Authentication
-     */
-    @GetMapping("/secureBAAuthenticated")
-    @RolesAllowed("BA_USER")
-    public String getSecureBAAuthenticated() {
-        return "Secure authenticated page";
-    }
-
-
-    /*
      * Needs client certificate, and authentication from the user in the client certificate
      */
     @GetMapping("/secureCAAuthenticated")
