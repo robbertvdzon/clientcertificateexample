@@ -46,11 +46,8 @@ public class RestTemplateConfiguration {
         return getRestTemplate(builder, false, "", false);
     }
 
-    public RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, String keystoreprefix, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
-
-
+    private RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, String keystoreprefix, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
         try {
-
             HttpClientBuilder custom = HttpClients.custom();
 
             if (clientCert) {
@@ -65,7 +62,6 @@ public class RestTemplateConfiguration {
 
                 KeyStore keystore = KeyStore.getInstance("PKCS12");
                 keystore.load(new ClassPathResource(keystoreLocation).getInputStream(), keystorePasswd.toCharArray());
-
 
                 SSLContextBuilder sslContextBuilder = SSLContextBuilder.create();
                 sslContextBuilder.loadTrustMaterial(truststore, new TrustSelfSignedStrategy());

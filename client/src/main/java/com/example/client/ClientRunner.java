@@ -34,16 +34,8 @@ public class ClientRunner implements CommandLineRunner {
     int failureCount = 0;
 
     @Override
-    public void run(String...args) throws IOException {
+    public void run(String... args) throws IOException {
         runTests();
-
-//        while (true) {
-//            System.out.println("\n\nPress enter to start a new test");
-//            String line = System.console().readLine();
-//            if (line.trim().isEmpty()){
-//                runTests();
-//            }
-//        }
         System.exit(0);
     }
 
@@ -78,7 +70,7 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldSucceed("https://localhost:8443/secure", restTemplate);
         pageShouldSucceed("https://localhost:8443/secureAuthenticated", restTemplate);
 
-        System.out.println(failureCount==0?"\n\nAll tests passed!":"\n\n"+failureCount+" Tests failed!! <--------");
+        System.out.println(failureCount == 0 ? "\n\nAll tests passed!" : "\n\n" + failureCount + " Tests failed!! <--------");
 
     }
 
@@ -94,24 +86,22 @@ public class ClientRunner implements CommandLineRunner {
     private void tryPage(String url, RestTemplate restTemplate, boolean shouldSucceed) {
         boolean result;
         int trySize = 45;
-        String logString = String.format("%-"+trySize+"."+trySize+"s", url+"  ");
+        String logString = String.format("%-" + trySize + "." + trySize + "s", url + "  ");
 
         try {
             ResponseEntity exchange = restTemplate.exchange(url, HttpMethod.GET, null, String.class);
-            logString+=": "+exchange.getStatusCode().value();//+":"+exchange.getBody();
+            logString += ": " + exchange.getStatusCode().value();//+":"+exchange.getBody();
             result = exchange.getStatusCode().is2xxSuccessful();
-        }
-        catch (Exception ex){
-//            System.out.println(ex.getMessage());
-            logString+=": "+ex.getClass().getSimpleName();
+        } catch (Exception ex) {
+            logString += ": " + ex.getClass().getSimpleName();
             result = false;
         }
         int logStringSize = 60;
-        logString = String.format("%-"+logStringSize+"."+logStringSize+"s", logString);
-        logString+=result==shouldSucceed ? " : --> OK" : " : --------------------> FAILED!";
+        logString = String.format("%-" + logStringSize + "." + logStringSize + "s", logString);
+        logString += result == shouldSucceed ? " : --> OK" : " : --------------------> FAILED!";
 
         System.out.println(logString);
 
-        if (result!=shouldSucceed) failureCount++;
+        if (result != shouldSucceed) failureCount++;
     }
 }
