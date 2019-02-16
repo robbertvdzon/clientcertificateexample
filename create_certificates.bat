@@ -9,12 +9,12 @@ keytool -import -keystore client1truststore.p12 -file server_cert.pem -alias loc
 keytool -import -keystore client2truststore.p12 -file server_cert.pem -alias localhost -storepass passwd -noprompt
 
 rem genereer een client keystore
-keytool -genkey -keystore client1keystore.p12 -alias client1 -storepass passwd -validity 360 -keysize 2048 -keyalg RSA -dname "CN=client, OU=Unknown, O=Unknown, L=Unknown, S=Unknown, C=Unknown"
-keytool -genkey -keystore client2keystore.p12 -alias client2 -storepass passwd -validity 360 -keysize 2048 -keyalg RSA -dname "CN=client, OU=Unknown, O=Unknown, L=Unknown, S=Unknown, C=Unknown"
+keytool -genkey -keystore client1keystore.p12 -alias client -storepass passwd -validity 360 -keysize 2048 -keyalg RSA -dname "CN=client1, OU=Unknown, O=Unknown, L=Unknown, S=Unknown, C=Unknown"
+keytool -genkey -keystore client2keystore.p12 -alias client -storepass passwd -validity 360 -keysize 2048 -keyalg RSA -dname "CN=client2, OU=Unknown, O=Unknown, L=Unknown, S=Unknown, C=Unknown"
 
 rem maak een certificate request uit de client keystore(de client1.csr en client2.csr)
-keytool -certreq -keystore client1keystore.p12 -alias client1 -keyalg rsa -file client1.csr -storepass passwd
-keytool -certreq -keystore client2keystore.p12 -alias client2 -keyalg rsa -file client2.csr -storepass passwd
+keytool -certreq -keystore client1keystore.p12 -alias client -keyalg rsa -file client1.csr -storepass passwd
+keytool -certreq -keystore client2keystore.p12 -alias client -keyalg rsa -file client2.csr -storepass passwd
 
 rem genereer een certificaat op basis van de certificate request (client_cert1.pem en client_cert2.pem)
 keytool -gencert -keystore serverkeystore.p12 -alias server  -storepass passwd -infile client1.csr -outfile client1_cert.pem -rfc

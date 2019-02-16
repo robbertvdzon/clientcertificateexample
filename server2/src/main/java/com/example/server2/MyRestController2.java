@@ -18,11 +18,8 @@ public class MyRestController2 {
     /*
      * Needs client certificate, and authentication from the user in the client certificate
      */
-    @GetMapping("/secureCAAuthenticated")
+    @GetMapping("/secureAuthenticated")
     @RolesAllowed("CERTIFICATE_USER")
-//  the following two annotations could also be used!
-//    @PreAuthorize("hasAuthority('ROLE_CERTIFICATE_USER')")
-//    @PreAuthorize("hasRole('CERTIFICATE_USER')")
     public String getSecureCAAuthenticated() {
         return "Secure authenticated page";
     }

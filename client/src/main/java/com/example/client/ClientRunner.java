@@ -38,23 +38,13 @@ public class ClientRunner implements CommandLineRunner {
         runTests();
 
 //        while (true) {
-//
 //            System.out.println("\n\nPress enter to start a new test");
 //            String line = System.console().readLine();
 //            if (line.trim().isEmpty()){
 //                runTests();
 //            }
-//            else if (line.trim().equals("1")){
-//                pageShouldSucceed("/secureCAAuthenticated", restTemplateWithCertificateClient2);
-//            }
-//            else if (line.trim().equals("2")){
-//                pageShouldSucceed("/secureBAAuthenticated", restTemplateWithCertificateClient2);
-//            }
-//            else{
-//                System.out.println("Unknown command");
-//            }
 //        }
-//        System.exit(0);
+        System.exit(0);
     }
 
     public void runTests() {
@@ -65,32 +55,28 @@ public class ClientRunner implements CommandLineRunner {
         pageShouldSucceed("http://localhost:8091/insecure", restTemplate);
         pageShouldFail("http://localhost:8091/insecureAuthenticated", restTemplate);
         pageShouldFail("https://localhost:8443/secure", restTemplate);
-        pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
-        pageShouldFail("https://localhost:8443/secureCAAuthenticated", restTemplate);
+        pageShouldFail("https://localhost:8443/secureAuthenticated", restTemplate);
 
         System.out.println("\n========================== TESTS WITHOUT CERTIFICATE WITH BASIC AUTH=========================");
         restTemplate = restTemplateWithoutCertificateWithBasicAuth;
         pageShouldSucceed("http://localhost:8091/insecure", restTemplate);
         pageShouldSucceed("http://localhost:8091/insecureAuthenticated", restTemplate);
         pageShouldFail("https://localhost:8443/secure", restTemplate);
-        pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
-        pageShouldFail("https://localhost:8443/secureCAAuthenticated", restTemplate);
+        pageShouldFail("https://localhost:8443/secureAuthenticated", restTemplate);
 
         System.out.println("\n========================== TESTS WITH CERTIFICATE, CLIENT 1 =========================");
         restTemplate = restTemplateWithCertificateClient1;
         pageShouldSucceed("http://localhost:8091/insecure", restTemplate);
         pageShouldFail("http://localhost:8091/insecureAuthenticated", restTemplate);
         pageShouldSucceed("https://localhost:8443/secure", restTemplate);
-        pageShouldFail("https://localhost:8443/secureBAAuthenticated", restTemplate);
-        pageShouldSucceed("https://localhost:8443/secureCAAuthenticated", restTemplate);
+        pageShouldFail("https://localhost:8443/secureAuthenticated", restTemplate);
 
         System.out.println("\n========================== TESTS WITH CERTIFICATE, CLIENT 2 =========================");
         restTemplate = restTemplateWithCertificateClient2;
         pageShouldSucceed("http://localhost:8091/insecure", restTemplate);
-        pageShouldSucceed("http://localhost:8091/insecureAuthenticated", restTemplate);
+        pageShouldFail("http://localhost:8091/insecureAuthenticated", restTemplate);
         pageShouldSucceed("https://localhost:8443/secure", restTemplate);
-        pageShouldSucceed("https://localhost:8443/secureBAAuthenticated", restTemplate);
-        pageShouldSucceed("https://localhost:8443/secureCAAuthenticated", restTemplate);
+        pageShouldSucceed("https://localhost:8443/secureAuthenticated", restTemplate);
 
         System.out.println(failureCount==0?"\n\nAll tests passed!":"\n\n"+failureCount+" Tests failed!! <--------");
 

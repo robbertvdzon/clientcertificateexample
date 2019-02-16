@@ -3,6 +3,7 @@ package com.example.client;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,33 +48,34 @@ public class RestTemplateConfiguration {
 
     public RestTemplate getRestTemplate(RestTemplateBuilder builder, boolean clientCert, String keystoreprefix, boolean basicAuth) throws KeyStoreException, IOException, CertificateException, NoSuchAlgorithmException {
 
-        String keystoreLocation = keystoreprefix+"keystore.p12";
-        String keystorePasswd = "passwd";
-        String keyPasswd = "passwd";
-        String truststoreLocation = keystoreprefix+"truststore.p12";
-        String trustPasswd = "passwd";
-
-        KeyStore truststore = KeyStore.getInstance("PKCS12");
-        truststore.load(new ClassPathResource(truststoreLocation).getInputStream(), trustPasswd.toCharArray());
-
-        KeyStore keystore = KeyStore.getInstance("PKCS12");
-        keystore.load(new ClassPathResource(keystoreLocation).getInputStream(), keystorePasswd.toCharArray());
 
         try {
 
-            SSLContextBuilder sslContextBuilder = SSLContextBuilder.create();
-
-            sslContextBuilder.loadTrustMaterial(truststore, new TrustSelfSignedStrategy());
+            HttpClientBuilder custom = HttpClients.custom();
 
             if (clientCert) {
+                String keystoreLocation = keystoreprefix+"keystore.p12";
+                String keystorePasswd = "passwd";
+                String keyPasswd = "passwd";
+                String truststoreLocation = keystoreprefix+"truststore.p12";
+                String trustPasswd = "passwd";
+
+                KeyStore truststore = KeyStore.getInstance("PKCS12");
+                truststore.load(new ClassPathResource(truststoreLocation).getInputStream(), trustPasswd.toCharArray());
+
+                KeyStore keystore = KeyStore.getInstance("PKCS12");
+                keystore.load(new ClassPathResource(keystoreLocation).getInputStream(), keystorePasswd.toCharArray());
+
+
+                SSLContextBuilder sslContextBuilder = SSLContextBuilder.create();
+                sslContextBuilder.loadTrustMaterial(truststore, new TrustSelfSignedStrategy());
                 sslContextBuilder.loadKeyMaterial(keystore, keyPasswd.toCharArray());
+                SSLContext sslContext = sslContextBuilder.build();
+                custom.setSSLContext(sslContext);
             }
 
-            SSLContext sslContext = sslContextBuilder.build();
 
-            HttpClient client = HttpClients.custom()
-                    .setSSLContext(sslContext)
-                    .build();
+            HttpClient client = custom.build();
 
             RestTemplateBuilder restTemplateBuilder = builder
                     .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(client))
